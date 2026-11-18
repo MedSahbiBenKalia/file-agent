@@ -30,8 +30,11 @@ def file_write(relative_path : str = ".", content : str = "") -> str :
     file_path.write_text(content, encoding="utf-8")
     return f"Wrote {len(content)} chars to {file_path}"
 
-
+def finish(summary: str) -> str:
+    """Signal that the task is complete. The loop stops when this is called."""
+    return f"DONE: {summary}"
 
 #print(list_files())
 #print(read_file("input/profile.txt"))
-print(file_write("output/test.txt", "this a test to the file_write function"))
+#print(file_write("output/test.txt", "this a test to the file_write function"))
+print(finish("every thing work well"))
