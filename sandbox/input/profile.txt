@@ -1,0 +1,6 @@
+Name: sabhbi ben kalaia
+Role: backend Engineer
+Experience: 3 years Python, FastAPI, PostgreSQL
+Projects: built a file-processing agent; REST API for X
+Education: master Computer Science, 2022
+Skills: Python, FastAPI, Docker, SQL
