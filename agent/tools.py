@@ -25,9 +25,13 @@ def read_file(relative_path : str = ".") -> str :
     result += f"\nfile_content:\n{file_content}\n"
     return result
 
-
+def file_write(relative_path : str = ".", content : str = "") -> str :
+    file_path = sandbox_dir / relative_path
+    file_path.write_text(content, encoding="utf-8")
+    return f"Wrote {len(content)} chars to {file_path}"
 
 
 
 #print(list_files())
-print(read_file("input/profile.txt"))
+#print(read_file("input/profile.txt"))
+print(file_write("output/test.txt", "this a test to the file_write function"))
