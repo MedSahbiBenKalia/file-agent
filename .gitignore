@@ -3,5 +3,4 @@ venv/
 __pycache__/
 *.pyc
 logs/*.jsonl
-sandbox/output/*
-!sandbox/output/.gitkeep
+
