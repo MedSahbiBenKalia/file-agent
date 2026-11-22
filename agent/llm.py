@@ -1,7 +1,25 @@
 import os
 from dotenv import load_dotenv
 import google.genai as genai
+from dataclasses import dataclass
 import time
+
+
+@dataclass
+class LLMResponse:
+    text: str | None              # model's text reply ("" if none)
+    tool_calls: list[dict]        # function_call steps the model requested
+    raw: object                   # the full interaction object
+    history: list                 # updated conversation history
+
+    def __repr__(self) -> str:
+        return (
+            f"LLMResponse(text={self.text!r}, "
+            f"tool_calls={self.tool_calls}, "
+            f"history_len={len(self.history)})"
+        )
+
+
 
 load_dotenv()
 
@@ -9,7 +27,41 @@ client = genai.Client()
 
 MODEL_NAME = "gemini-3.1-flash-lite"
 
-def chat(history: list, user_input: str , tools: list[dict] | None = None) -> tuple[str, list]:
+
+
+def _send(history: list, tools: list[dict] | None = None) -> LLMResponse:
+    
+    #prepare the arguments for the interaction
+    
+    arguments = {
+        "model": MODEL_NAME,
+        "input": history,
+        "store": False, 
+    }
+    
+    if tools:
+        arguments["tools"] = tools
+    
+    interaction = client.interactions.create(
+        **arguments,
+    )
+
+    reply = interaction.output_text
+        
+    # Append the model-generated steps to the history (must be saved as-is)
+    steps =  [s.model_dump() for s in interaction.steps]
+    history.extend(steps)
+        
+    return LLMResponse(
+        text=reply,
+        tool_calls=[s for s in steps if s.get("type") == "function_call"],
+        raw=interaction,
+        history=history,
+    )
+    
+
+
+def chat(history: list, user_input: str , tools: list[dict] | None = None) -> LLMResponse:
   
     # Append the new user input to the history
     history.append({
@@ -17,31 +69,8 @@ def chat(history: list, user_input: str , tools: list[dict] | None = None) -> tu
         "content": [{"type": "text", "text": user_input}]
     })
 
-    #prepare the arguments for the interaction
-
-    arguments = {
-        "model": MODEL_NAME,
-        "input": history,
-        "store": False, 
-    }
-
-    if tools:
-        arguments["tools"] = tools
-
-
-
-    interaction = client.interactions.create(
-        **arguments,
-    )
-
-    # Get the reply
-    reply = interaction.output_text
-
-    # Append the model-generated steps to the history (must be saved as-is)
-    for step in interaction.steps:
-        history.append(step.model_dump())
-
-    return reply, history
+    return _send(history, tools=tools)
+    
 
 
 
@@ -49,24 +78,6 @@ def chat(history: list, user_input: str , tools: list[dict] | None = None) -> tu
 
 if __name__ == "__main__":
     history = []
-
-    # test of history and chat function
-    # reply, history = chat(history, "My name is Sahbi.")
-    # print("bot:", reply)
-
-    # reply, history = chat(history, "What is my name?")
-    # print("bot:", reply)
-
-    # reply, history = chat(history, "What did I ask you first?")
-    # print("bot:", reply)
-
-    # print("\n====================================================\n")
-    # print("History:")
-    # for step in history:
-    #     print(step)
-
-
-
 
     # test of tools 
     list_files_tool = {
@@ -82,16 +93,12 @@ if __name__ == "__main__":
         },
     }
 
-    reply, history = chat(
+    response = chat(
         history,
         "List the files in the input folder. You must call the list_files tool.",
         tools=[list_files_tool],
     )
 
-    print("reply:", repr(reply))
-    print("\n--- steps ---")
-    for step in history:
-        print(" type:", step.get("type"))
-        if step.get("type") == "function_call":
-            print("   name:", step.get("name"))
-            print("   arguments:", step.get("arguments"))
+    print("text:", repr(response.text))
+    print("tool_calls:", response.tool_calls)
+    print("history types:", [s.get("type") for s in response.history])
