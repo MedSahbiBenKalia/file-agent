@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import google.genai as genai
 from dataclasses import dataclass
 import time
-
+from prompts import SYSTEM_PROMPT
 
 @dataclass
 class LLMResponse:
@@ -36,7 +36,8 @@ def _send(history: list, tools: list[dict] | None = None) -> LLMResponse:
     arguments = {
         "model": MODEL_NAME,
         "input": history,
-        "store": False, 
+        "store": False,
+        "system_instruction": SYSTEM_PROMPT 
     }
     
     if tools:

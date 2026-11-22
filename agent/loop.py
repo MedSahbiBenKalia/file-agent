@@ -46,13 +46,7 @@ def run_agent(goal :str) -> tuple [str,str]:
 
 if __name__ == "__main__":
     goal = (
-        "You are a resume-writing agent working inside a sandbox folder. "
-        "Do the following:\n"
-        "1. Call list_files on 'input' to see what input files exist.\n"
-        "2. Read sandbox/input/profile.txt and sandbox/templates/resume_template.md.\n"
-        "3. Write a complete resume to sandbox/output/resume.md, "
-        "filling the template with the profile's information. Do not invent facts.\n"
-        "4. When the file is written, call the finish tool with a short summary."
+        "Create a resume tailored to the job description"
     )
 
     print("=== FileAgent starting ===")
