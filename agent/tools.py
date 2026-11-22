@@ -38,6 +38,7 @@ def finish(summary: str) -> str:
 
 TOOLS = [
     {
+        "type": "function",
         "name": "list_files",
         "description": (
             "List all files inside a sandbox subdirectory, recursively. "
@@ -56,6 +57,7 @@ TOOLS = [
         },
     },
     {
+        "type": "function",
         "name": "read_file",
         "description": (
             "Read the full text contents of a file in the sandbox. "
@@ -73,6 +75,7 @@ TOOLS = [
         },
     },
     {
+        "type": "function",
         "name": "write_file",
         "description": (
             "Write text to a file in the sandbox. Creates parent folders automatically "
@@ -94,6 +97,7 @@ TOOLS = [
         },
     },
     {
+        "type": "function",
         "name": "finish",
         "description": (
             "Call this when the task is fully complete. Provide a short summary "
@@ -104,7 +108,7 @@ TOOLS = [
             "properties": {
                 "summary": {
                     "type": "string",
-                    "description": "Short summary of the completed task.",
+                    "description": "Final message to the user: what was done, where the result is.",
                 }
             },
             "required": ["summary"],

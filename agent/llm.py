@@ -49,7 +49,7 @@ def _send(history: list, tools: list[dict] | None = None) -> LLMResponse:
     reply = interaction.output_text
         
     # Append the model-generated steps to the history (must be saved as-is)
-    steps =  [s.model_dump() for s in interaction.steps]
+    steps =  [s.model_dump() for s in (interaction.steps or [])]
     history.extend(steps)
         
     return LLMResponse(
