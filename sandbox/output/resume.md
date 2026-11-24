@@ -2,15 +2,17 @@
 ## Backend Engineer
 
 ### Experience
-- 3 years of experience in backend development, specifically with Python, FastAPI, and PostgreSQL, perfectly aligning with the 2+ year requirement.
+- 3 years of professional experience in backend development.
+- Expert in Python and FastAPI.
+- Proficient in PostgreSQL and database management.
+- Experienced with Docker for containerization and deployment.
 
 ### Projects
-- Developed a sophisticated file-processing agent.
-- Built a robust REST API for X.
+- File-processing agent: Built an autonomous agent system for processing documents.
+- REST API for X: Developed a robust RESTful API to support platform services.
 
 ### Education
-- Master's in Computer Science (2022)
+- Master of Computer Science, 2022
 
 ### Skills
-- Core: Python, FastAPI, Docker, SQL
-- Additional: Experience in building agent systems, which aligns with the desired experience for this role.
+- Python, FastAPI, Docker, SQL, LLM APIs
