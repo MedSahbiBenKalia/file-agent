@@ -1,0 +1,22 @@
+# mokhtar Candidate
+## Backend Engineer
+
+### Experience
+- 3 years of experience as a Backend Engineer
+- Expertise in Python, FastAPI, and PostgreSQL
+- Strong proficiency with Docker for containerization
+
+### Projects
+- Developed a robust file-processing agent
+- Designed and implemented a REST API for X
+- Experience integrating and working with LLM APIs
+
+### Education
+- Master in Computer Science, 2022
+
+### Skills
+- Python
+- FastAPI
+- Docker
+- PostgreSQL/SQL
+- LLM APIs & Agent Systems
